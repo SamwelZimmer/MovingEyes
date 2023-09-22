@@ -10,7 +10,7 @@ export default function Home() {
         <MuteButton />
       </div>
 
-      <main className='bg-black w-full h-screen flex py-48'>
+      <main className='bg-black w-full h-screen flex py-20 sm:py-48'>
         <div className='flex mx-auto h-max items-center'>
           <Eyes />
         </div>

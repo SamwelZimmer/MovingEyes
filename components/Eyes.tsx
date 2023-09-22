@@ -78,51 +78,49 @@ export default function Eyes() {
         }
     }, [mouseOver])
 
-useEffect(() => {
-    let blinkingTimeout: NodeJS.Timeout;
-    
-    if (!mouseOver) {
-        // handles the delay between blinks
-        blinkingTimeout = setTimeout(() => {
-            blinkEye();
-
-            // After blinking, set the next random blink interval
-            const interval = setInterval(() => {
+    useEffect(() => {
+        let blinkingTimeout: NodeJS.Timeout;
+        
+        if (!mouseOver) {
+            // handles the delay between blinks
+            blinkingTimeout = setTimeout(() => {
                 blinkEye();
-                clearInterval(interval); // Clear the current interval
-                
-                // Call useEffect function again to set a new random blink interval
-                setBlinkCount(prevCount => prevCount + 1);
-            }, getRandomBlinkInterval(10000, 20000));
-        }, getRandomBlinkInterval(5000, 10000));
-    }
-    
-    if (!blinkingState && !mouseOver) {
-        setBlink(true);
-        setTimeout(() => {
-            setBlink(false);
 
+                // After blinking, set the next random blink interval
+                const interval = setInterval(() => {
+                    blinkEye();
+                    clearInterval(interval); // Clear the current interval
+                    
+                    // Call useEffect function again to set a new random blink interval
+                    setBlinkCount(prevCount => prevCount + 1);
+                }, getRandomBlinkInterval(10000, 20000));
+            }, getRandomBlinkInterval(5000, 10000));
+        }
+        
+        if (!blinkingState && !mouseOver) {
+            setBlink(true);
             setTimeout(() => {
-                blinkEye();
+                setBlink(false);
 
                 setTimeout(() => {
                     blinkEye();
-                }, 200);
-            }, 1000);
-        }, 1500);
-    }
-    
-    return () => {
-        clearTimeout(blinkingTimeout); // cleanup timeout
-    };
-}, [blinkCount, mouseOver]);
+
+                    setTimeout(() => {
+                        blinkEye();
+                    }, 200);
+                }, 1000);
+            }, 1500);
+        }
+        
+        return () => {
+            clearTimeout(blinkingTimeout); // cleanup timeout
+        };
+    }, [blinkCount, mouseOver]);
 
     
     return (
 
         <>
-
-
         <div className="relative flex mx-auto h-max items-center">     
             <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="absolute top-0 left-0 z-10 h-full w-full" />
 
@@ -144,12 +142,15 @@ useEffect(() => {
             
             <SpeechBubble src="/speech_bubbles/bubble_initial.png" top={110} left={-30} direction="up" delay={3500} duration={4000} />
 
-            { (coverCounter === 1 || (coverCounter % 12 === 0 && coverCounter !== 0)) &&  <SpeechBubble src="/speech_bubbles/bubble_1.png" top={-50} left={-120} direction="right" delay={200} duration={3000} size={200} /> }
-            { (coverCounter === 4 || (coverCounter % 17 === 0 && coverCounter !== 0)) &&  <SpeechBubble src="/speech_bubbles/bubble_2.png" top={-50} left={-120} direction="right" delay={200}  duration={3000} size={200} /> }
-            { (coverCounter === 8 || (coverCounter % 23 === 0 && coverCounter !== 0)) &&  <SpeechBubble src="/speech_bubbles/bubble_3.png" top={-60} left={100} direction="down" delay={200}  duration={3000} size={200} /> }
-            { (coverCounter === 15 || (coverCounter % 30 === 0 && coverCounter !== 0)) &&  <SpeechBubble src="/speech_bubbles/bubble_4.png" top={80} left={100} direction="up" delay={200}  duration={3000} size={200} /> }
-            { (coverCounter === 56 || (coverCounter % 112 === 0 && coverCounter !== 0)) &&  <SpeechBubble src="/speech_bubbles/bubble_5.png" top={100} left={-50} direction="up" delay={200}  duration={3000} size={300} /> }
-            { coverCounter === 149 &&  <SpeechBubble src="/speech_bubbles/bubble_6.png" top={-100} left={-50} direction="down" delay={200}  duration={3000} size={300} /> }
+            <div className="hidden sm:block">
+                { (coverCounter === 1 || (coverCounter % 12 === 0 && coverCounter !== 0)) &&  <SpeechBubble src="/speech_bubbles/bubble_1.png" top={-50} left={-120} direction="right" delay={200} duration={3000} size={200} /> }
+                { (coverCounter === 4 || (coverCounter % 17 === 0 && coverCounter !== 0)) &&  <SpeechBubble src="/speech_bubbles/bubble_2.png" top={-50} left={-120} direction="right" delay={200}  duration={3000} size={200} /> }
+                { (coverCounter === 8 || (coverCounter % 23 === 0 && coverCounter !== 0)) &&  <SpeechBubble src="/speech_bubbles/bubble_3.png" top={-60} left={100} direction="down" delay={200}  duration={3000} size={200} /> }
+                { (coverCounter === 15 || (coverCounter % 30 === 0 && coverCounter !== 0)) &&  <SpeechBubble src="/speech_bubbles/bubble_4.png" top={80} left={100} direction="up" delay={200}  duration={3000} size={200} /> }
+                { (coverCounter === 56 || (coverCounter % 112 === 0 && coverCounter !== 0)) &&  <SpeechBubble src="/speech_bubbles/bubble_5.png" top={100} left={-50} direction="up" delay={200}  duration={3000} size={300} /> }
+                { coverCounter === 149 &&  <SpeechBubble src="/speech_bubbles/bubble_6.png" top={-100} left={-50} direction="down" delay={200}  duration={3000} size={300} /> }
+            </div>
+
 
         </div>
         </>
